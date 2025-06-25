@@ -2,18 +2,22 @@ package com.javaex.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.javaex.dao.GuestbookDAO;
+import com.javaex.service.GuestbookService;
 import com.javaex.vo.GuestbookVO;
 
 @Controller 
 public class GuestbookController {
 	// 필드
+	@Autowired
+	private GuestbookService guestbookService;
+	
 	// 생성자
 	// 메소드 gs
 	// 메소드 일반
@@ -22,8 +26,11 @@ public class GuestbookController {
 	public String list(Model model) {
 		System.out.println("GuestbookController.list()");
 		
-		GuestbookDAO guestbookDAO= new GuestbookDAO();
-		List<GuestbookVO> guestbookList = guestbookDAO.guestbookSelect();
+		// service
+		// GuestbookService guestbookService = new GuestbookService();
+		// @Autowired로 교체
+		
+		List<GuestbookVO> guestbookList  = guestbookService.exeGetGuestbookList();
 
 		// Model 개념
 		// DispatcherServlet에게 명령
@@ -43,8 +50,9 @@ public class GuestbookController {
 	public String add(@ModelAttribute GuestbookVO guestbookVO) {
 		System.out.println("GuestbookController.add()");
 		
-		GuestbookDAO guestbookDAO= new GuestbookDAO();
-		guestbookDAO.guestbookInsert(guestbookVO);
+		//GuestbookService guestbookService = new GuestbookService();
+		guestbookService.exeGetGuestbookAdd(guestbookVO);
+		
 
 		// view 리다이렉트(redirect:)
 		// http://localhost:8888/guestbook4/list 리스트 제외 생략가능
@@ -86,8 +94,8 @@ public class GuestbookController {
 	public String delete(@ModelAttribute GuestbookVO guestbookVO) {
 		System.out.println("GuestbookController.remove()");
 		
-		GuestbookDAO guestbookDAO= new GuestbookDAO();
-		guestbookDAO.guestbookDelete(guestbookVO);
+		//GuestbookService guestbookService = new GuestbookService();
+		guestbookService.exeGetGuestbookRemove(guestbookVO);
 		
 		return "redirect:/list";
 	}
