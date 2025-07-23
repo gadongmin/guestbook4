@@ -17,6 +17,6 @@ public class HelloController {
 	public String hello() {
 		System.out.println("hello");
 
-		return "/WEB-INF/views/hello.jsp";
+		return "hello";
 	}
 }
